@@ -14,7 +14,6 @@
                 Width="26" Margin="453,26,0,0" 
                 Height="23" 
                 />
-        <Label x:Name="label" Content="Result = " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="28,23,0,0" Width="54"/>
 
     </Grid>
 </Window>

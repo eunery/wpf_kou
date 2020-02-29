@@ -34,6 +34,13 @@ namespace ResultBoxes
             BoxNew.Margin = new Thickness(35, i, 0, 0);
             gMain.Children.Add(BoxNew);
             i += 20;
+            BoxNew.TextChanged += ChangeLabelText;
+        }
+        private void ChangeLabelText(object sender, object args)
+        {
+            int result = 0;
+            TextBox ch = (TextBox)sender;
+            Label.Content = "Result" + result;
         }
     }
 
