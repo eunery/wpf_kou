@@ -36,11 +36,14 @@ namespace ResultBoxes
             i += 20;
             BoxNew.TextChanged += ChangeLabelText;
         }
-        private void ChangeLabelText(object sender, object args)
+        private void ChangeLabelText(object sender, EventArgs e)
         {
-            int result = 0;
-            TextBox ch = (TextBox)sender;
-            Label.Content = "Result" + result;
+            
+            double result = 0;
+            foreach (var item in )
+            {
+
+            }
         }
     }
 
