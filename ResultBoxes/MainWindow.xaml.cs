@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace ResultBoxes
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -40,10 +37,15 @@ namespace ResultBoxes
         {
             
             double result = 0;
-            foreach (var item in )
+            foreach (var item in gMain.Children)
             {
-
+                if (item is TextBox tb)
+                {
+                    bool isDouble = double.TryParse(tb.Text, out double a);
+                    result += a;
+                }
             }
+            Label.Content = "Result " + result;
         }
     }
 
