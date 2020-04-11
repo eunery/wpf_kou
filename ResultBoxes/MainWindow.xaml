@@ -7,20 +7,28 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid x:Name="gMain">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
         <Button x:Name="button"
-                Content="+" 
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Width="26" Margin="453,26,0,0" 
-                Height="23" 
-                />
-        <Label x:Name ="Label"
+                Content="+"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Width="66" Height="36">
+        </Button>
+        <Label x:Name="Label"
                Content="Result"
                HorizontalAlignment="Left"
-               VerticalAlignment="Top"
-               Margin="21,26,0,0"
-               Width="177"
+               VerticalAlignment="Center"
                />
-
+        <Label x:Name="errorLabel"
+               Content=""
+               VerticalAlignment="Bottom"
+               HorizontalAlignment="Center"
+               />
+        <StackPanel x:Name="mStack"
+            Grid.Row="1"
+            />
     </Grid>
 </Window>

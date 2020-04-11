@@ -17,35 +17,112 @@ namespace ResultBoxes
 {
     public partial class MainWindow : Window
     {
+        int count = 0;
+        Dictionary<TextBox, ComboBox> KeyByPair = new Dictionary<TextBox, ComboBox>();
         public MainWindow()
         {
             InitializeComponent();
             button.Click += button_Click;
         }
-        private int i = 50;
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            TextBox BoxNew = new TextBox();
-            BoxNew.HorizontalAlignment = HorizontalAlignment.Left;
-            BoxNew.VerticalAlignment = VerticalAlignment.Top;
-            BoxNew.Margin = new Thickness(35, i, 0, 0);
-            gMain.Children.Add(BoxNew);
-            i += 20;
+            TextBox BoxNew = new TextBox()
+            {
+                Width = 60,
+                HorizontalAlignment = HorizontalAlignment.Center,
+            };
+            ComboBox operations = CreateComboBox(new string[] { "+", "-", "*", "/" });
+            KeyByPair.Add(BoxNew,operations);
+            StackPanel Stack = new StackPanel()
+            {
+                Name = "mStack" + count,
+                Orientation = Orientation.Horizontal,
+                HorizontalAlignment = HorizontalAlignment.Center,
+            };
+            Button button = new Button()
+            {
+                Name = "button" + count,
+                Content = "Delete",
+            };
+            count++;
+            Stack.Children.Add(operations);
+            Stack.Children.Add(BoxNew);
+            Stack.Children.Add(button);
+            mStack.Children.Add(Stack);
+            operations.SelectionChanged += ChangeLabelText;
             BoxNew.TextChanged += ChangeLabelText;
         }
         private void ChangeLabelText(object sender, EventArgs e)
         {
             
             double result = 0;
-            foreach (var item in gMain.Children)
+            foreach (var item in mStack.Children)
             {
-                if (item is TextBox tb)
-                {
-                    bool isDouble = double.TryParse(tb.Text, out double a);
-                    result += a;
-                }
+                if (item is StackPanel sp)
+                    foreach (object obj in sp.Children)
+                    {
+                        if (obj is TextBox tb)
+                        {
+                            bool isDouble = double.TryParse(tb.Text, out double a);
+                            if (isDouble)
+                            {
+                                ComboBox comboBox = KeyByPair[tb];
+                                a = Convert.ToDouble(tb.Text);
+                                result = Count(result, a, comboBox.Text);
+                                errorLabel.Content = "";
+                            }
+                            else errorLabel.Content = "Ошибка";
+                        }
+                    }
             }
             Label.Content = "Result " + result;
+        }
+        private ComboBox CreateComboBox(string[] parametr)
+        {
+            ComboBox box = new ComboBox();
+            foreach (string item in parametr)
+            {
+                ComboBoxItem cbItem = new ComboBoxItem
+                {
+                    Content = item
+                };
+                box.Items.Add(cbItem);
+            }
+            return box;
+        }
+        private double Count (double result, double a, string oper)
+        {
+            switch (oper)
+            {
+                case "+":
+                    result += a;
+                    break;
+                case "-":
+                    result -= a;
+                    break;
+                case "*":
+                    result *= a;
+                    break;
+                case "/":
+                    result /= a;
+                    break;
+            }
+            return result;
+        }
+        private void DeleteButton(object sender, RoutedEventArgs e)
+        {
+            Button DeleteButton = (Button)sender;
+            string ButtonName = DeleteButton.Name.Substring(6);
+            foreach  (object obj in mStack.Children)
+            {
+                if (obj is StackPanel stackpanel)
+                    if (stackpanel.Name.Substring(6).Equals(ButtonName))
+                    {
+                        mStack.Children.Remove(stackpanel);
+                        break;
+                    }
+            }
+            ChangeLabelText(sender, e);
         }
     }
 
