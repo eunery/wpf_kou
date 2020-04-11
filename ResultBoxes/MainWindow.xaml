@@ -27,8 +27,10 @@
                VerticalAlignment="Bottom"
                HorizontalAlignment="Center"
                />
-        <StackPanel x:Name="mStack"
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel x:Name="mStack"
             Grid.Row="1"
-            />
+                    />
+            </ScrollViewer>
     </Grid>
 </Window>
